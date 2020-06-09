@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final CustomButton relativeLayout = new CustomButton(MainActivity.this);
-        CustomButton.KeyAccess("AKIAZID35LK5ROAGCPHJ","wimdF3AVdcNLGsVzUcBv363/yjXjQ5Mr1fCX0nIm");
+        CustomButton.KeyAccess("","");
         final ConstraintLayout constraintLayout =  findViewById(R.id.parent);
         final TextView textView = findViewById(R.id.tvClick);
 
