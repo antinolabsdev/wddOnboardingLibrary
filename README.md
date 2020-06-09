@@ -4,7 +4,9 @@
 
 An Android Library written in Java, for Recognition of an Image 
 
-
+[![Android API23+](https://img.shields.io/badge/Android-API_23+-green.svg)]()
+  [![Java 6+](https://img.shields.io/badge/Java-6+-red.svg)]()
+  [![License Apache 2.0](https://img.shields.io/badge/license-Apache%20License%202.0-red.svg)]()
 
 ## Installation
 
@@ -42,7 +44,10 @@ Add permissions in your manifest.xml. Request permission from your app if you ar
 
 ## Usage
 
-
+	1.  Create the instance the of the CustomButton class
+	2.  Connected with the parent layout.
+	3.  Call the method of the custom layout and pass the parameters accessKey and secretKey
+	4   Add the view with customLayout.
 
 ```java
        CustomButton relativeLayout = new CustomButton(MainActivity.this);
@@ -51,6 +56,13 @@ Add permissions in your manifest.xml. Request permission from your app if you ar
        relativeLayout.init();
        constraintLayout.addView(relativeLayout);
  ```
+ 
+ ## Contributing
+
+- If you **need help** or you'd like to **ask a general question**
+- If you **found a bug**, open a service request.
+- If you **have a feature request**, open a service request.
+- If you **want to contribute**, submit a pull request.
  
  ## License
 [MIT](https://choosealicense.com/licenses/mit/)
