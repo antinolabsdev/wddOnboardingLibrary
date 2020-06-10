@@ -30,13 +30,15 @@ public class DetectTextAsycTask extends AsyncTask<Void,Void, List<TextDetection>
     private Boolean checkBooleanResulDetectText=false;
     private String accessKey;
     private String secretKey;
+    private String bucketName;
 
-    public DetectTextAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String accesskey, String secretKey) {
+    public DetectTextAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String bucketName, String accesskey, String secretKey) {
         this.cameraImage=cameraImageName;
         this.textDetctionInterface= (TextDetectionInterface) profileMatchingActivity;
         this.callBackInterface=callBackInterface;
         this.accessKey=accesskey;
         this.secretKey=secretKey;
+        this.bucketName=bucketName;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class DetectTextAsycTask extends AsyncTask<Void,Void, List<TextDetection>
                 .withImage(new Image()
                         .withS3Object(new S3Object()
                                 .withName(cameraImage)
-                                .withBucket(Constants.BUCKET_NAME)));
+                                .withBucket(bucketName)));
 
 
         try {

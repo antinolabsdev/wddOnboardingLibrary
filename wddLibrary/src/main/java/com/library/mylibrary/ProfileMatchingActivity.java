@@ -50,7 +50,7 @@ public class ProfileMatchingActivity extends AppCompatActivity implements Compar
     private ProgressBar progressBar;
     private TabsPagerAdapter adapter;
     private Boolean isCbFacial=false,isCbId=false,isCbObject=false;
-    private String accesskey,secretKey;
+    private String accesskey, secretKey,  wddOnboardingBucket;
     private RelativeLayout button;
 
 
@@ -64,13 +64,14 @@ public class ProfileMatchingActivity extends AppCompatActivity implements Compar
         imagePickeruriImage = Uri.parse(getIntent().getStringExtra(Constants.IMAGE_PICKER_IMAGE));
         accesskey= getIntent().getStringExtra(Constants.ACCESS_KEY);
         secretKey= getIntent().getStringExtra(Constants.SECRET_KEY);
+        wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
         initView();
         //All API CALLS
-        CompareFaceLabelAsycTask compareFaceLabelAsycTask = new CompareFaceLabelAsycTask(cameraImageName,imagePickerName,this,this,accesskey,secretKey);
+        CompareFaceLabelAsycTask compareFaceLabelAsycTask = new CompareFaceLabelAsycTask(cameraImageName,imagePickerName,this,this,accesskey,secretKey,wddOnboardingBucket);
         compareFaceLabelAsycTask.execute();
-        DetectLabelAsycTask myAsyncTaskdetectLabel = new DetectLabelAsycTask(cameraImageName,this,this,accesskey,secretKey);
+        DetectLabelAsycTask myAsyncTaskdetectLabel = new DetectLabelAsycTask(cameraImageName,this,this,accesskey,secretKey,wddOnboardingBucket);
         myAsyncTaskdetectLabel.execute();
-        DetectTextAsycTask detectTextAsycTask = new DetectTextAsycTask(cameraImageName,this,this,accesskey,secretKey);
+        DetectTextAsycTask detectTextAsycTask = new DetectTextAsycTask(cameraImageName,this,this,accesskey,secretKey,wddOnboardingBucket);
         detectTextAsycTask.execute();
 
         button.setOnClickListener(new View.OnClickListener() {

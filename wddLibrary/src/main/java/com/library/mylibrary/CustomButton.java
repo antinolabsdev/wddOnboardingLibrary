@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CustomButton extends RelativeLayout implements View.OnClickListener {
 
@@ -24,7 +27,9 @@ public class CustomButton extends RelativeLayout implements View.OnClickListener
     private static int counterOfView = 0;
     private static int selectedColor;
     private static String AccessKeyToken = "";
-    private static String SecretKeyToken="";
+    private static String SecretKeyToken = "";
+    private static String CognitioPoolId = "";
+    private static String WddBucketOnboarding = "";
 
 
     public CustomButton(Activity context) {
@@ -32,6 +37,7 @@ public class CustomButton extends RelativeLayout implements View.OnClickListener
         this.context = context;
 
     }
+
     public void init() {
         //First Time Button load is in Left Side
         if (counterOfView == 0) {
@@ -222,23 +228,25 @@ public class CustomButton extends RelativeLayout implements View.OnClickListener
 
     }
 
-    public static void KeyAccess(String AccessKey, String SecretKey)
-    {
+    public static void KeyAccess(String AccessKey, String SecretKey, String CognitoPoolId, String BucketName) {
 
-        AccessKeyToken=AccessKey;
-        SecretKeyToken=SecretKey;
-
+        AccessKeyToken = AccessKey;
+        SecretKeyToken = SecretKey;
+        CognitioPoolId = CognitoPoolId;
+        WddBucketOnboarding = BucketName;
 
     }
-
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case 0X101:
-                context.startActivity(new Intent(context, WDDStarter.class).putExtra(Constants.ACCESS_KEY,AccessKeyToken)
-                        .putExtra(Constants.SECRET_KEY, SecretKeyToken));
+                Log.d(TAG, "onCreate: "+AccessKeyToken+SecretKeyToken+CognitioPoolId+WddBucketOnboarding);
+                context.startActivity(new Intent(context, WDDStarter.class).putExtra(Constants.ACCESS_KEY, AccessKeyToken)
+                        .putExtra(Constants.SECRET_KEY, SecretKeyToken)
+                        .putExtra(Constants.COGNITO_POOL_ID, CognitioPoolId)
+                        .putExtra(Constants.BUCKET_NAME, WddBucketOnboarding));
                 removeAllViews();
 
         }

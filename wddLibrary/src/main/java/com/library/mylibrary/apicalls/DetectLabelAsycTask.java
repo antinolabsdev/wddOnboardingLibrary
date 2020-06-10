@@ -34,13 +34,15 @@ public class DetectLabelAsycTask extends AsyncTask<Void,Void, List<Label>> {
     private CallbackInterface callBackInterface;
     private String accessKey;
     private String secretKey;
+    private String bucketName;
 
-    public DetectLabelAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface commonCallBackInterface, String accesskey, String secretKey) {
+    public DetectLabelAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface commonCallBackInterface, String accesskey, String secretKey, String wddOnboardingBucket) {
         this.cameraImageName=cameraImageName;
         this.detectLabelsRequest = (DetectLabelCallback) profileMatchingActivity;
         this.callBackInterface = commonCallBackInterface;
         this.accessKey=accesskey;
         this.secretKey=secretKey;
+        this.bucketName=wddOnboardingBucket;
 
     }
 
@@ -49,7 +51,7 @@ public class DetectLabelAsycTask extends AsyncTask<Void,Void, List<Label>> {
         try {
             AmazonRekognition rekognitionClient = new AmazonRekognitionClient(new BasicAWSCredentials(accessKey, secretKey));
             DetectLabelsRequest request = new DetectLabelsRequest()
-                    .withImage(new Image().withS3Object(new S3Object().withName(cameraImageName).withBucket(Constants.BUCKET_NAME)))
+                    .withImage(new Image().withS3Object(new S3Object().withName(cameraImageName).withBucket(bucketName)))
                     .withMaxLabels(10).withMinConfidence(75F);
             DetectLabelsResult result = rekognitionClient.detectLabels(request);
             labels = result.getLabels();

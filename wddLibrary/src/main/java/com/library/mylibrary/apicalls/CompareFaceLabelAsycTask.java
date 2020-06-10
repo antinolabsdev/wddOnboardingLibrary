@@ -28,14 +28,16 @@ public class CompareFaceLabelAsycTask extends AsyncTask<Void,Void, List<CompareF
     private Boolean checkedValue = false;
     private String accessKey;
     private String secretKey;
+    private String bucketName;
 
-    public CompareFaceLabelAsycTask(String cameraImageName, String imagePickerName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String accesskey, String secretKey) {
+    public CompareFaceLabelAsycTask(String cameraImageName, String imagePickerName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String accesskey, String secretKey, String wddOnboardingBucket) {
         this.cameraImageName=cameraImageName;
         this.imagePickerName=imagePickerName;
         this.compareFaceInterface= (CompareFaceInterface) profileMatchingActivity;
         this.callBackInterface=callBackInterface;
         this.accessKey=accesskey;
         this.secretKey=secretKey;
+        this.bucketName=wddOnboardingBucket;
     }
 
     @Override
@@ -43,9 +45,9 @@ public class CompareFaceLabelAsycTask extends AsyncTask<Void,Void, List<CompareF
         AmazonRekognition rekognitionClient = new AmazonRekognitionClient(new BasicAWSCredentials(accessKey, secretKey));
         CompareFacesRequest compareFacesRequest = new CompareFacesRequest().withSourceImage(new Image()
                 .withS3Object(new S3Object()
-                        .withName(cameraImageName).withBucket(Constants.BUCKET_NAME))).withTargetImage(new Image()
+                        .withName(cameraImageName).withBucket(bucketName))).withTargetImage(new Image()
                 .withS3Object(new S3Object()
-                        .withName(imagePickerName).withBucket(Constants.BUCKET_NAME))).withSimilarityThreshold((80F));
+                        .withName(imagePickerName).withBucket(bucketName))).withSimilarityThreshold((80F));
         try {
             CompareFacesResult result = rekognitionClient.compareFaces(compareFacesRequest);
             List<CompareFacesMatch> lists = result.getFaceMatches();

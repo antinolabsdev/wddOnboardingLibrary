@@ -46,7 +46,7 @@ public class WDDStarter extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1176, ALL_PERMISSIONS_RESULT_CAMERA = 1107, THUMBNAIL_SIZE = 200;
     private String pathOrigin;
     private File filelocation;
-    private String accessKey, secretKey;
+    private String accessKey, secretKey, cognitoPoolId, wddOnboardingBucket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,9 @@ public class WDDStarter extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         accessKey = getIntent().getStringExtra(Constants.ACCESS_KEY);
         secretKey = getIntent().getStringExtra(Constants.SECRET_KEY);
+        cognitoPoolId = getIntent().getStringExtra(Constants.COGNITO_POOL_ID);
+        wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
+        Log.d(TAG, "onCreate: "+accessKey+" "+secretKey+" "+cognitoPoolId+" "+wddOnboardingBucket);
         wddStarterButton = (Button) findViewById(R.id.wdd_started_btn);
         wddStarterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +121,9 @@ public class WDDStarter extends AppCompatActivity {
                             .putExtra(Constants.PATH, pathOrigin)
                             .putExtra(Constants.FILETYPE, filelocation)
                             .putExtra(Constants.ACCESS_KEY, accessKey)
-                            .putExtra(Constants.SECRET_KEY, secretKey));
+                            .putExtra(Constants.SECRET_KEY, secretKey)
+                            .putExtra(Constants.COGNITO_POOL_ID, cognitoPoolId)
+                            .putExtra(Constants.BUCKET_NAME, wddOnboardingBucket));
 
                 } catch (IOException e) {
                     e.printStackTrace();

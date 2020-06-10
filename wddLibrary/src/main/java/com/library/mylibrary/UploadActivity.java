@@ -44,6 +44,7 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.library.mylibrary.Constants.BUCKET_NAME;
 
 
@@ -63,7 +64,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     private Boolean stateCheckImage1 = false, stateCheckImage2 = false;
     private TransferUtility transferUtility;
     private String cameraPath, imagePickerPath;
-    private String accessKey, secretKey;
+    private String accessKey, secretKey, cognitoPoolId, wddOnboardingBucket;
+    ;
     private ProgressDialog progressDialogUpload;
 
 
@@ -77,6 +79,9 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         fileCamera = (File) getIntent().getSerializableExtra(Constants.FILETYPE);
         accessKey = getIntent().getStringExtra(Constants.ACCESS_KEY);
         secretKey = getIntent().getStringExtra(Constants.SECRET_KEY);
+        cognitoPoolId = getIntent().getStringExtra(Constants.COGNITO_POOL_ID);
+        wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
+        Log.d(TAG, "onCreate: "+accessKey+secretKey+cognitoPoolId+wddOnboardingBucket);
         //GetName of Camera.
         cameraPath = fileCamera.getName();
         init();
@@ -88,7 +93,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     public void createTransferUtility() {
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
-                Constants.COGNITO_POOL_ID, // Identity pool ID
+                cognitoPoolId, // Identity pool ID
                 Regions.US_EAST_1 // Region
         );
         AmazonS3Client s3Client = new AmazonS3Client(credentialsProvider);
@@ -233,7 +238,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     void upload(File fileCamera, File fileImagePicker, final String objectKey1, String objectKey2) {
         Log.d(TAG, "onStateChanged: " + "upload method called");
         TransferObserver transferObserver = transferUtility.upload(
-                "wddonboardingbucket",
+                wddOnboardingBucket,
                 objectKey1,
                 fileCamera, CannedAccessControlList.PublicRead
         );
@@ -262,7 +267,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
 
 
         TransferObserver transferObserverTargetImage = transferUtility.upload(
-                BUCKET_NAME,
+                wddOnboardingBucket,
                 objectKey2,
                 fileImagePicker, CannedAccessControlList.PublicRead
         );
@@ -280,7 +285,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                             .putExtra(Constants.CAMERA_IMAGE, bitmap)
                             .putExtra(Constants.IMAGE_PICKER_IMAGE, selectedImageUri.toString())
                             .putExtra(Constants.ACCESS_KEY, accessKey)
-                            .putExtra(Constants.SECRET_KEY, secretKey));
+                            .putExtra(Constants.SECRET_KEY, secretKey)
+                            .putExtra(BUCKET_NAME, wddOnboardingBucket));
                 }
             }
 
