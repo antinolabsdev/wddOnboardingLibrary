@@ -119,7 +119,7 @@ Add permissions in your manifest.xml. Request permission from your app if you ar
 
 ```java
        CustomButton relativeLayout = new CustomButton(MainActivity.this);
-       CustomButton.KeyAccess("AccessKey","SecretKey");
+       CustomButton.KeyAccess(AccessKey,SecretKey,CognitoPoolId,BucketName);
        ConstraintLayout constraintLayout =  findViewById(R.id.parent);
        relativeLayout.init();
        constraintLayout.addView(relativeLayout);
