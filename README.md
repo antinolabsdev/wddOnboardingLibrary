@@ -70,9 +70,9 @@ Click Create. Note the name and the region of the bucket that was created
 
 ## Create IAM User for Aws Rekognition
 
-Follow official doc to get the IAM user. (Link is given velow
+Follow official doc to get the IAM user. (Link is given below)
 
-[a link] https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html 
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html 
 
 And attach the same policy which are give to console pool.
 
