@@ -116,6 +116,7 @@ public class WDDStarter extends AppCompatActivity {
                 Uri resultUri = result.getUri();
                 try {
                     Bitmap bitmap = getThumbnail(resultUri);
+                    Log.d(TAG, "onCreate: "+accessKey+" "+secretKey+" "+cognitoPoolId+" "+wddOnboardingBucket);
                     startActivity(new Intent(WDDStarter.this, UploadActivity.class)
                             .putExtra(Constants.THUMBNAIL, bitmap)
                             .putExtra(Constants.PATH, pathOrigin)

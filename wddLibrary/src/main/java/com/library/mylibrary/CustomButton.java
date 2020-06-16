@@ -235,6 +235,8 @@ public class CustomButton extends RelativeLayout implements View.OnClickListener
         CognitioPoolId = CognitoPoolId;
         WddBucketOnboarding = BucketName;
 
+        Log.d(TAG, "KeyAccess: "+ AccessKeyToken +  SecretKeyToken +  CognitioPoolId + WddBucketOnboarding );
+
     }
 
 

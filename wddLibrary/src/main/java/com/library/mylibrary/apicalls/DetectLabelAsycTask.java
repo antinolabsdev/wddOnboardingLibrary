@@ -27,9 +27,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class DetectLabelAsycTask extends AsyncTask<Void,Void, List<Label>> {
     List<Label> labels= new ArrayList<>();
     private String cameraImageName;
-    public ProfileMatchingActivity profileMatchingActivity;
-    private SharedPreferences sharedPreferences;
-    private Boolean checkBooleanResulDetectLabel;
+    private Boolean checkBooleanResulDetectLabel=false;
     public DetectLabelCallback detectLabelsRequest;
     private CallbackInterface callBackInterface;
     private String accessKey;

@@ -32,11 +32,11 @@ public class DetectTextAsycTask extends AsyncTask<Void,Void, List<TextDetection>
     private String secretKey;
     private String bucketName;
 
-    public DetectTextAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String bucketName, String accesskey, String secretKey) {
+    public DetectTextAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String accessKey, String secretKey, String bucketName) {
         this.cameraImage=cameraImageName;
         this.textDetctionInterface= (TextDetectionInterface) profileMatchingActivity;
         this.callBackInterface=callBackInterface;
-        this.accessKey=accesskey;
+        this.accessKey=accessKey;
         this.secretKey=secretKey;
         this.bucketName=bucketName;
     }

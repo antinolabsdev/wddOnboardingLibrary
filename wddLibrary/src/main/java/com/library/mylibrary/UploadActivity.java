@@ -81,7 +81,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         secretKey = getIntent().getStringExtra(Constants.SECRET_KEY);
         cognitoPoolId = getIntent().getStringExtra(Constants.COGNITO_POOL_ID);
         wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
-        Log.d(TAG, "onCreate: "+accessKey+secretKey+cognitoPoolId+wddOnboardingBucket);
+        Log.d(TAG, "onCreate1: "+accessKey+secretKey+cognitoPoolId+wddOnboardingBucket);
         //GetName of Camera.
         cameraPath = fileCamera.getName();
         init();
@@ -279,6 +279,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                 if (TransferState.COMPLETED.equals(state)) {
                     Log.d(TAG, "Transfer observer onStateChanged: " + state + stateCheckImage2);
                     progressDialogUpload.dismiss();
+                    Log.d(TAG, "onCreate2: "+accessKey+" "+secretKey+" "+cognitoPoolId+" "+wddOnboardingBucket);
                     startActivity(new Intent(UploadActivity.this, ProfileMatchingActivity.class)
                             .putExtra(Constants.CAMERA_FILE, cameraPath)
                             .putExtra(Constants.IMAGE_FILENAME, imagePickerPath)
