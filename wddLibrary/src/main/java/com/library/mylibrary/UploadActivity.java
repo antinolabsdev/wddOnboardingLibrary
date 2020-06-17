@@ -14,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -65,8 +68,9 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     private TransferUtility transferUtility;
     private String cameraPath, imagePickerPath;
     private String accessKey, secretKey, cognitoPoolId, wddOnboardingBucket;
-    ;
+    private int selectedColor;
     private ProgressDialog progressDialogUpload;
+    private LinearLayout backgroundHeader;
 
 
     @Override
@@ -81,6 +85,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         secretKey = getIntent().getStringExtra(Constants.SECRET_KEY);
         cognitoPoolId = getIntent().getStringExtra(Constants.COGNITO_POOL_ID);
         wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
+        selectedColor = getIntent().getIntExtra(Constants.COLORTYPE,0);
         Log.d(TAG, "onCreate1: "+accessKey+secretKey+cognitoPoolId+wddOnboardingBucket);
         //GetName of Camera.
         cameraPath = fileCamera.getName();
@@ -88,6 +93,15 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         imageViewCameraImage.setImageBitmap(bitmap);
         createTransferUtility();
         onclick();
+
+        if(selectedColor==0)
+        {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((getColor(android.R.color.holo_blue_bright))));
+        }else {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((selectedColor)));
+        }
     }
 
     public void createTransferUtility() {
@@ -287,7 +301,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                             .putExtra(Constants.IMAGE_PICKER_IMAGE, selectedImageUri.toString())
                             .putExtra(Constants.ACCESS_KEY, accessKey)
                             .putExtra(Constants.SECRET_KEY, secretKey)
-                            .putExtra(BUCKET_NAME, wddOnboardingBucket));
+                            .putExtra(BUCKET_NAME, wddOnboardingBucket)
+                            .putExtra(Constants.COLORTYPE,selectedColor));
                 }
             }
 

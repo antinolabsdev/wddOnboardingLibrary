@@ -13,6 +13,8 @@ public class Constants {
     public static final String THUMBNAIL="thumbnail";
     public static final String PATH="Path";
     public static final String FILETYPE="FileType";
+    public static final String COLORTYPE="colorType";
+
 
 
 

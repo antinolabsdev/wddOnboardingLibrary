@@ -1,12 +1,14 @@
 package com.library.mylibrary;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +54,7 @@ public class ProfileMatchingActivity extends AppCompatActivity implements Compar
     private Boolean isCbFacial=false,isCbId=false,isCbObject=false;
     private String accesskey, secretKey,  wddOnboardingBucket;
     private RelativeLayout button;
+    private int selectedColor=0;
 
 
     @Override
@@ -65,19 +68,29 @@ public class ProfileMatchingActivity extends AppCompatActivity implements Compar
         accesskey= getIntent().getStringExtra(Constants.ACCESS_KEY);
         secretKey= getIntent().getStringExtra(Constants.SECRET_KEY);
         wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
+        selectedColor = getIntent().getIntExtra(Constants.COLORTYPE,0);
+        if(selectedColor==0)
+        {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((getColor(android.R.color.holo_blue_bright))));
+        }else {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((selectedColor)));
+        }
         initView();
         //All API CALLS
         CompareFaceLabelAsycTask compareFaceLabelAsycTask = new CompareFaceLabelAsycTask(cameraImageName,imagePickerName,this,this,accesskey,secretKey,wddOnboardingBucket);
         compareFaceLabelAsycTask.execute();
-        DetectLabelAsycTask myAsyncTaskdetectLabel = new DetectLabelAsycTask(cameraImageName,this,this,accesskey,secretKey,wddOnboardingBucket);
+        DetectLabelAsycTask myAsyncTaskdetectLabel = new DetectLabelAsycTask(imagePickerName,this,this,accesskey,secretKey,wddOnboardingBucket);
         myAsyncTaskdetectLabel.execute();
-        DetectTextAsycTask detectTextAsycTask = new DetectTextAsycTask(cameraImageName,this,this,accesskey,secretKey,wddOnboardingBucket);
+        DetectTextAsycTask detectTextAsycTask = new DetectTextAsycTask(imagePickerName,this,this,accesskey,secretKey,wddOnboardingBucket);
         detectTextAsycTask.execute();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProfileMatchingActivity.this,WDDStarter.class));
+                startActivity(new Intent(ProfileMatchingActivity.this,WDDStarter.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
             }
         });

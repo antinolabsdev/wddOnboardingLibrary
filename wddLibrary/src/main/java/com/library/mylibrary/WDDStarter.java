@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ public class WDDStarter extends AppCompatActivity {
     private ArrayList<String> permissionsToRequest;
     private static final int REQUEST_IMAGE_CAPTURE = 1176, ALL_PERMISSIONS_RESULT_CAMERA = 1107, THUMBNAIL_SIZE = 200;
     private String pathOrigin;
+    private int selectedColor;
     private File filelocation;
     private String accessKey, secretKey, cognitoPoolId, wddOnboardingBucket;
 
@@ -52,12 +55,21 @@ public class WDDStarter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_w_d_d_starter);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         accessKey = getIntent().getStringExtra(Constants.ACCESS_KEY);
         secretKey = getIntent().getStringExtra(Constants.SECRET_KEY);
         cognitoPoolId = getIntent().getStringExtra(Constants.COGNITO_POOL_ID);
         wddOnboardingBucket = getIntent().getStringExtra(Constants.BUCKET_NAME);
+        selectedColor = getIntent().getIntExtra(Constants.COLORTYPE,0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(selectedColor==0)
+        {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((getColor(android.R.color.holo_blue_bright))));
+        }else {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((selectedColor)));
+        }
         Log.d(TAG, "onCreate: "+accessKey+" "+secretKey+" "+cognitoPoolId+" "+wddOnboardingBucket);
         wddStarterButton = (Button) findViewById(R.id.wdd_started_btn);
         wddStarterButton.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +136,9 @@ public class WDDStarter extends AppCompatActivity {
                             .putExtra(Constants.ACCESS_KEY, accessKey)
                             .putExtra(Constants.SECRET_KEY, secretKey)
                             .putExtra(Constants.COGNITO_POOL_ID, cognitoPoolId)
-                            .putExtra(Constants.BUCKET_NAME, wddOnboardingBucket));
+                            .putExtra(Constants.BUCKET_NAME, wddOnboardingBucket)
+                            .putExtra(Constants.COLORTYPE,selectedColor)
+                            .putExtra(Constants.COLORTYPE,selectedColor));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -208,7 +222,8 @@ public class WDDStarter extends AppCompatActivity {
         menu_setting.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(WDDStarter.this, SettingActivity.class));
+                startActivity(new Intent(WDDStarter.this, SettingActivity.class)
+                .putExtra(Constants.COLORTYPE,selectedColor));
                 finish();
                 return false;
             }

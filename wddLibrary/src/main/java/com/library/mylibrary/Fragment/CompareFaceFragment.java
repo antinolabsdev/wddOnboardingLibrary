@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amazonaws.services.rekognition.model.BoundingBox;
 import com.amazonaws.services.rekognition.model.CompareFacesMatch;
+import com.amazonaws.services.rekognition.model.ComparedFace;
 import com.library.mylibrary.R;
 
 import java.util.ArrayList;
@@ -49,14 +51,12 @@ public class CompareFaceFragment extends Fragment {
         imageViewPicker.setImageURI(imagePickeruriImage);
 
         if (!compareFacesMatchList.isEmpty()) {
-            for (CompareFacesMatch label : compareFacesMatchList) {
-                count++;
+            for (CompareFacesMatch match: compareFacesMatchList){
+                if(match.getSimilarity()>=80f)
+                {
+                    textViewResult.setText("Matched\n"+ match.getSimilarity()+"%");
+                }
             }
-            if(count>0)
-            {
-                textViewResult.setText("Face is matched");
-            }
-
             }
         else
         {

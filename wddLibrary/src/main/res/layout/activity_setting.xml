@@ -15,6 +15,7 @@
         android:weightSum="8">
 
         <ImageView
+            android:id="@+id/wdd_back_to_home_setting"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"

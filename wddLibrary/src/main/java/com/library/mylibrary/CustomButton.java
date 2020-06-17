@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -21,7 +22,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class CustomButton extends RelativeLayout implements View.OnClickListener {
 
 
-    public Activity context;
+    public static Activity context;
     private LinearLayout linearLayout;
     private static String position = "left";
     private static int counterOfView = 0;
@@ -248,7 +249,8 @@ public class CustomButton extends RelativeLayout implements View.OnClickListener
                 context.startActivity(new Intent(context, WDDStarter.class).putExtra(Constants.ACCESS_KEY, AccessKeyToken)
                         .putExtra(Constants.SECRET_KEY, SecretKeyToken)
                         .putExtra(Constants.COGNITO_POOL_ID, CognitioPoolId)
-                        .putExtra(Constants.BUCKET_NAME, WddBucketOnboarding));
+                        .putExtra(Constants.BUCKET_NAME, WddBucketOnboarding)
+                .putExtra(Constants.COLORTYPE,selectedColor));
                 removeAllViews();
 
         }

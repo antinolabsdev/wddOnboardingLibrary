@@ -26,7 +26,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class DetectLabelAsycTask extends AsyncTask<Void,Void, List<Label>> {
     List<Label> labels= new ArrayList<>();
-    private String cameraImageName;
+    private String imagePickeImage;
     private Boolean checkBooleanResulDetectLabel=false;
     public DetectLabelCallback detectLabelsRequest;
     private CallbackInterface callBackInterface;
@@ -34,8 +34,8 @@ public class DetectLabelAsycTask extends AsyncTask<Void,Void, List<Label>> {
     private String secretKey;
     private String bucketName;
 
-    public DetectLabelAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface commonCallBackInterface, String accesskey, String secretKey, String wddOnboardingBucket) {
-        this.cameraImageName=cameraImageName;
+    public DetectLabelAsycTask(String imagePickerImage, ProfileMatchingActivity profileMatchingActivity, CallbackInterface commonCallBackInterface, String accesskey, String secretKey, String wddOnboardingBucket) {
+        this.imagePickeImage=imagePickerImage;
         this.detectLabelsRequest = (DetectLabelCallback) profileMatchingActivity;
         this.callBackInterface = commonCallBackInterface;
         this.accessKey=accesskey;
@@ -49,7 +49,7 @@ public class DetectLabelAsycTask extends AsyncTask<Void,Void, List<Label>> {
         try {
             AmazonRekognition rekognitionClient = new AmazonRekognitionClient(new BasicAWSCredentials(accessKey, secretKey));
             DetectLabelsRequest request = new DetectLabelsRequest()
-                    .withImage(new Image().withS3Object(new S3Object().withName(cameraImageName).withBucket(bucketName)))
+                    .withImage(new Image().withS3Object(new S3Object().withName(imagePickeImage).withBucket(bucketName)))
                     .withMaxLabels(10).withMinConfidence(75F);
             DetectLabelsResult result = rekognitionClient.detectLabels(request);
             labels = result.getLabels();

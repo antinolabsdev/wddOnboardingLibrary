@@ -3,6 +3,7 @@ package com.library.wdd;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final CustomButton relativeLayout = new CustomButton(MainActivity.this);
-        CustomButton.KeyAccess("","","","");
+
+        CustomButton.KeyAccess("AKIA2FUYI7S2MOWWDL4W","mTaaNUa8t7InNVNNYq+gptb4QdLmHcFE4/HyDcrI","us-east-1:153fc86c-6b7c-4a1b-b253-9948f9409c4d","wddonboardingbucket");
         final ConstraintLayout constraintLayout =  findViewById(R.id.parent);
         final TextView textView = findViewById(R.id.tvClick);
 

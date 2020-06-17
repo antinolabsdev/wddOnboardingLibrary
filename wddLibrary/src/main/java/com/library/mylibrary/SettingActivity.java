@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -35,16 +38,26 @@ public class SettingActivity extends AppCompatActivity implements SeekBar.OnSeek
     private int facialProgress,idProgress,idInfo;
     private SeekBar sbFacialMatch, sbId, sbInfo;
     private SharedPreferences sharedPreferences;
+    private ImageView backButton;
+    private int selectedColor;
     private static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        selectedColor = getIntent().getIntExtra(Constants.COLORTYPE,0);
+        if(selectedColor==0)
+        {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((getColor(android.R.color.holo_blue_bright))));
+        }else {
+            getSupportActionBar().setBackgroundDrawable(new
+                    ColorDrawable((selectedColor)));
+        }
         context= SettingActivity.this;
         initView();
         onClickListner();
-        Switch sw = (Switch) findViewById(R.id.switch1);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Switch sw = (Switch) findViewById(R.id.switch1);;
 
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -78,6 +91,7 @@ public class SettingActivity extends AppCompatActivity implements SeekBar.OnSeek
         sbId=(SeekBar) findViewById(R.id.wdd_SeekBar_id);
         sbInfo=(SeekBar) findViewById(R.id.wdd_SeekBar_info);
         tvSaveButton=(TextView) findViewById(R.id.wdd_tv_save_button);
+        backButton = findViewById(R.id.wdd_back_to_home_setting);
     }
 
     private void onClickListner() {
@@ -85,6 +99,7 @@ public class SettingActivity extends AppCompatActivity implements SeekBar.OnSeek
         sbId.setOnSeekBarChangeListener(this);
         sbFacialMatch.setOnSeekBarChangeListener(this);
         tvSaveButton.setOnClickListener(this);
+        backButton.setOnClickListener(this);
     }
 
     private void colorPicker() {
@@ -149,22 +164,18 @@ public class SettingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
         if (seekBar.getId() == R.id.wdd_SeekBar_face) {
             tvFacialMatch.setText("FACIALMATCH "+progress+"%");
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("FaceThreshold",progress).apply();
+
+
             this.facialProgress=progress;
         }
         else if(seekBar.getId()==R.id.wdd_SeekBar_id)
         {
             tvId.setText("ID "+progress+"%");
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("IdThresHold",progress).apply();
             this.idProgress=progress;
         }
         else if(seekBar.getId()==R.id.wdd_SeekBar_info)
         {
             tvInfo.setText("INFO "+progress+"%");
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("InfoThresHold",progress).apply();
             this.idInfo=progress;
         }
 
@@ -185,9 +196,18 @@ public class SettingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     @Override
     public void onClick(View v) {
-        CustomButton.setColor(sendcolor);
-        CustomButton.positionOfButton(position);
-        finish();
+
+        if(R.id.wdd_tv_save_button==v.getId()){
+            CustomButton.setColor(sendcolor);
+            CustomButton.positionOfButton(position);
+            finish();
+        }
+        else if(R.id.wdd_back_to_home_setting==v.getId())
+        {
+            startActivity(new Intent(this,WDDStarter.class));
+            finish();
+        }
+
     }
 
 

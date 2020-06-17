@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DetectTextAsycTask extends AsyncTask<Void,Void, List<TextDetection>> {
 
-    private String cameraImage;
+    private String ImagePickerImage;
     private List<TextDetection> textDetectionsResult = new ArrayList<>();
     private ProfileMatchingActivity profileMatchingActivity;
     SharedPreferences sharedPreferences;
@@ -33,7 +33,7 @@ public class DetectTextAsycTask extends AsyncTask<Void,Void, List<TextDetection>
     private String bucketName;
 
     public DetectTextAsycTask(String cameraImageName, ProfileMatchingActivity profileMatchingActivity, CallbackInterface callBackInterface, String accessKey, String secretKey, String bucketName) {
-        this.cameraImage=cameraImageName;
+        this.ImagePickerImage=cameraImageName;
         this.textDetctionInterface= (TextDetectionInterface) profileMatchingActivity;
         this.callBackInterface=callBackInterface;
         this.accessKey=accessKey;
@@ -48,13 +48,13 @@ public class DetectTextAsycTask extends AsyncTask<Void,Void, List<TextDetection>
         DetectTextRequest request = new DetectTextRequest()
                 .withImage(new Image()
                         .withS3Object(new S3Object()
-                                .withName(cameraImage)
+                                .withName(ImagePickerImage)
                                 .withBucket(bucketName)));
 
 
         try {
             DetectTextResult result = rekognitionClient.detectText(request);
-            System.out.println("Detected lines and words for " + cameraImage);
+            System.out.println("Detected lines and words for " + ImagePickerImage);
             List<TextDetection> textDetections = result.getTextDetections();
             textDetectionsResult=textDetections;
             if(textDetectionsResult!=null)
