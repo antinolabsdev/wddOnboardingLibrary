@@ -94,7 +94,7 @@ allprojects {
 Add dependency in your build.gradle.
 
 ```bash
-	        implementation 'com.github.antinolabsdev:wddOnboardingLibrary:1.1'
+	        implementation 'com.github.antinolabsdev:wddOnboardingLibrary:1.3'
 
 ```
 
